@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import pyxel
-
+menu = int(input("Bonjour! Voulez-vous 'Jouer' ou voir le 'Score' ? (Jouer=0, Score=1)  : "))
 TILEMAP=int(input("Choisissez une map (0,1) : "))
 
 """
@@ -371,7 +371,7 @@ class Joueur:
 class App:
 
     def __init__(self):
-        pyxel.init(160, 120, title="Pokipo", fps=60, quit_key=pyxel.KEY_ESCAPE)
+        pyxel.init(250, 120, title="Pokipo", fps=60, quit_key=pyxel.KEY_ESCAPE)
         pyxel.load("pokipo.pyxres")
         self.joueur = Joueur(80, 60)
         pyxel.run(self.update, self.draw)
@@ -380,16 +380,21 @@ class App:
         self.joueur.update()
 
     def draw(self):
-        # Remplir l'écran avec une couleur de fond grise
-        pyxel.cls(12)
-        pyxel.bltm(0, 0, TILEMAP, 0, 0, 10000, 10000, 0)
-        # Dessiner le joueur
-        self.joueur.draw()
-        pos_x=self.joueur.x
-        if self.joueur.x<80:
-            pyxel.camera(0,0)
-        else:
-            pyxel.camera(pos_x-80,0)
-        pyxel.text(10,10, "Il etait une grosse fois le gros pokipo", 0)
+        
+        #on met la map en place
+        if menu == 0:
+            pyxel.cls(0)
+            pyxel.bltm(0, 0, TILEMAP, 0, 8, 4000, 250, 0) # Affiche la tilemap
+            pyxel.flip() # Permet de mettre à jour l'affichage
+            #on crée une caméra
+            pos_x=self.joueur.x
+            if self.joueur.x<80:
+                pyxel.camera(0.0)
+            else:
+                pyxel.camera(pos_x-80,0)
+        
+            # Dessiner le joueur
+            self.joueur.draw()
+
         
 App()
